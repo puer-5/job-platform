@@ -1,0 +1,17 @@
+server:
+    port: 8081 # 或其他未被占用的端口
+
+spring:
+    application:
+        name: auth-server # 服务注册到Eureka时的名称
+
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: http://localhost:8761/eureka/ # 你的Eureka Server地址
+    instance:
+        hostname: localhost # 如果在docker或其他环境，这里需要是服务可访问的hostname或IP
+
+jwt:
+    secret: ThisIsAVerySecretKeyForJobPlatformAuthService # 替换为一个强壮的、足够长的密钥
+    expiration: 3600000 # JWT过期时间，单位毫秒 (例如 1小时)
