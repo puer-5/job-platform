@@ -13,6 +13,7 @@
         <module>eureka-server</module>
         <module>jobseeker-service</module>
         <module>zuul-gateway</module>
+        <module>auth-server</module>
     </modules>
 
     <parent>
