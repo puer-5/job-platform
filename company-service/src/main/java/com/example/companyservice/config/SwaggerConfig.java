@@ -18,7 +18,7 @@ public class SwaggerConfig {
     public Docket apiDocket() {
         return new Docket(DocumentationType.OAS_30)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.example.jobseekerservice.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.example.companyservice.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo());
@@ -27,7 +27,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Job Platform API文档")
-                .description("提供 Resume 和 JobSeeker 的 RESTful 接口")
+                .description("提供 company, jobapplication 的 RESTful 接口")
                 .version("1.0")
                 .contact(new Contact("Your Name", "https://your-website.com", "you@example.com"))
                 .build();
