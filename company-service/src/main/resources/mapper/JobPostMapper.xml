@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.companyservice.mapper.JobPostMapper">
+
+    <!-- 插入职位信息 -->
+    <insert id="insertJobPost" parameterType="com.example.companyservice.entity.JobPost">
+        INSERT INTO job_post (
+            company_id, title, description, requirements,
+            location, salary_range, job_type, status,
+            posted_date, expiry_date
+        ) VALUES (
+                     #{companyId}, #{title}, #{description}, #{requirements},
+                     #{location}, #{salaryRange}, #{jobType}, #{status},
+                     #{postedDate}, #{expiryDate}
+                 )
+    </insert>
+
+    <!-- 根据 ID 获取职位 -->
+    <select id="getJobPostById" resultType="com.example.companyservice.entity.JobPost">
+        SELECT * FROM job_post WHERE id = #{id}
+    </select>
+
+    <!-- 获取所有职位 -->
+    <select id="getAllJobPosts" resultType="com.example.companyservice.entity.JobPost">
+        SELECT * FROM job_post
+    </select>
+
+    <!-- 更新职位信息 -->
+    <update id="updateJobPost" parameterType="com.example.companyservice.entity.JobPost">
+        UPDATE job_post SET
+                            title = #{title},
+                            description = #{description},
+                            requirements = #{requirements},
+                            location = #{location},
+                            salary_range = #{salaryRange},
+                            job_type = #{jobType},
+                            status = #{status},
+                            posted_date = #{postedDate},
+                            expiry_date = #{expiryDate}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 删除职位 -->
+    <delete id="deleteJobPost" parameterType="long">
+        DELETE FROM job_post WHERE id = #{id}
+    </delete>
+
+    <!-- 根据公司 ID 获取职位列表 -->
+    <select id="getJobPostsByCompanyId" resultType="com.example.companyservice.entity.JobPost">
+        SELECT * FROM job_post WHERE company_id = #{companyId}
+    </select>
+
+</mapper>
