@@ -1,7 +1,7 @@
-package com.example.jobseekerservice.controller;
+package com.example.companyservice.controller;
 
-import com.example.jobseekerservice.entity.Company;
-import com.example.jobseekerservice.service.CompanyService;
+import com.example.companyservice.entity.Company;
+import com.example.companyservice.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize; // Import PreAuthorize

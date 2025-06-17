@@ -14,6 +14,7 @@
         <module>jobseeker-service</module>
         <module>zuul-gateway</module>
         <module>auth-server</module>
+        <module>company-service</module>
     </modules>
 
     <parent>
