@@ -54,6 +54,53 @@
 			<version>1.5.9.RELEASE</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- JJWT - Java JWT -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.11.2</version> <!-- Use a recent version compatible with your SB/SC -->
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>0.11.2</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>0.11.2</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- Spring Boot Security Starter -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<!-- Lombok for boilerplate code reduction -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
+	<build>
+	<plugins>
+		<plugin>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-maven-plugin</artifactId>
+			<configuration>
+				<excludes>
+					<exclude>
+						<groupId>org.projectlombok</groupId>
+						<artifactId>lombok</artifactId>
+					</exclude>
+				</excludes>
+			</configuration>
+		</plugin>
+	</plugins>
+</build>
 
 </project>

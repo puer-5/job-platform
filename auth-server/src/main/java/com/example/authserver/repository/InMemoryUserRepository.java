@@ -36,9 +36,9 @@ public class InMemoryUserRepository {
 
     public User save(User user) {
         // In a real scenario, handle ID generation properly and check for duplicates
-        if (user.getId() == null) {
-            user.setId(UUID.randomUUID().toString());
-        }
+//        if (user.getId() == null) {
+//            user.setId(UUID.randomUUID().toString());
+//        }
         // Password is expected to be already hashed when passed to save
         users.put(user.getUsername(), user);
         System.out.println("User saved to in-memory repository: " + user.getUsername());

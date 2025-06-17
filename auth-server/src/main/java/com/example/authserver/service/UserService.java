@@ -2,48 +2,71 @@ package com.example.authserver.service;
 
 import com.example.authserver.exception.UserAlreadyExistsException;
 import com.example.authserver.model.User;
-import com.example.authserver.repository.InMemoryUserRepository;
+import com.example.authserver.model.UserType;
+import com.example.authserver.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
 public class UserService {
 
-    private final InMemoryUserRepository userRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(InMemoryUserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User registerNewUser(String username, String password, String email) throws UserAlreadyExistsException {
+    // *** Method to register a regular USER ***
+    @Transactional
+    public User registerRegularUser(String username, String password, String email, String phone) throws UserAlreadyExistsException {
+        // Call the internal save method with UserType.USER
+        return registerUser(username, password, email, phone, UserType.USER);
+    }
+
+    // *** Method to register an ENTERPRISE user ***
+    @Transactional
+    public User registerEnterpriseUser(String username, String password, String email, String phone) throws UserAlreadyExistsException {
+        // Call the internal save method with UserType.ENTERPRISE
+        return registerUser(username, password, email, phone, UserType.ENTERPRISE);
+    }
+
+    // *** Internal method to handle the actual user creation and saving ***
+    // Keep transactional here as it's the core save logic
+    private User registerUser(String username, String password, String email, String phone, UserType userType) throws UserAlreadyExistsException {
+        // Check for existing user by username OR email (based on unique constraints)
         if (userRepository.existsByUsername(username)) {
             throw new UserAlreadyExistsException("User with username " + username + " already exists");
         }
+        if (userRepository.existsByEmail(email)) {
+            throw new UserAlreadyExistsException("User with email " + email + " already exists");
+        }
 
-        User newUser = new User();
-        newUser.setUsername(username);
-        String hashedPassword = passwordEncoder.encode(password);
-        newUser.setPasswordHash(hashedPassword); // Hash the password
-        newUser.setEmail(email);
-        // Set other default properties if needed
-        System.out.println("Registering user: " + username);
-        System.out.println("Original password: " + password); // Be cautious with logging plain passwords in production
-        System.out.println("Hashed password: " + hashedPassword); // Log the hashed password
+        // Create the new User entity
+        User newUser = new User(
+                username,
+                passwordEncoder.encode(password), // Hash the password
+                email,
+                phone,
+                userType // *** Use the passed userType ***
+        );
 
-        return userRepository.save(newUser);
+        // Save the user to the database
+        User savedUser = userRepository.save(newUser);
+        System.out.println("User saved to database: " + savedUser.getUsername() + " with type: " + savedUser.getUserType());
+        return savedUser;
     }
+
 
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
-    public Optional<User> findById(String userId) {
+    public Optional<User> findById(Long userId) {
         return userRepository.findById(userId);
     }
-
-    // Add other user-related methods here (e.g., update profile, change password - requires database)
 }

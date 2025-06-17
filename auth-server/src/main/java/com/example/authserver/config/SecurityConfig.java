@@ -1,7 +1,7 @@
 package com.example.authserver.config;
 
 
-import com.example.authserver.repository.InMemoryUserRepository;
+import com.example.authserver.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,16 +16,20 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-// import org.springframework.security.web.SecurityFilterChain; // Remove this import if not used elsewhere
+import org.springframework.security.core.GrantedAuthority; // Import GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import java.util.Collection; // Import Collection
+import java.util.Collections;
+import java.util.stream.Collectors; // Import Collectors
 
 @Configuration
 @EnableWebSecurity // 启用Spring Security的Web安全功能
 // *** 继承 WebSecurityConfigurerAdapter ***
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final InMemoryUserRepository userRepository;
+    private final UserRepository userRepository;
 
-    public SecurityConfig(InMemoryUserRepository userRepository) {
+    public SecurityConfig(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -36,17 +40,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public UserDetailsService userDetailsService() {
+        System.out.println("aaa");
         return username -> {
             // ... (attempting to load user log) ...
 
             return userRepository.findByUsername(username)
                     .map(user -> {
-                        System.out.println("User found in UserDetailsService: " + user.getUsername());
-                        System.out.println("Password hash retrieved from repository: " + user.getPasswordHash()); // Log retrieved hash
+                        System.out.println("User found in UserDetailsService: " + user.getUsername() + " with roles: " + user.getUserType() + "password"+ user.getPassword()); // Log roles from user model
+                        // Convert roles (Set<String>) to GrantedAuthorities (Collection<? extends GrantedAuthority>)
+                        Collection<? extends GrantedAuthority> authorities = Collections.singletonList(
+                                new SimpleGrantedAuthority("ROLE_" + user.getUserType().name()) // Convert enum name to role string
+                        );
+
+                        System.out.println("Granted Authorities: " + authorities); // Log converted authorities
+
                         return org.springframework.security.core.userdetails.User
                                 .withUsername(user.getUsername())
-                                .password(user.getPasswordHash()) // Ensure this is the hashed password
-                                .roles("USER")
+                                .password(user.getPassword()) // Ensure this is the hashed password
+                                .authorities(authorities)
                                 .build();
                     })
                     .orElseThrow(() -> {

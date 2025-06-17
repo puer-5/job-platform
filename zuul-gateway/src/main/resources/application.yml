@@ -17,8 +17,16 @@ zuul:
     jobseeker:
       path: /jobseeker/**
       service-id: jobseeker-service
+    authserver:
+      path: /auth/**
+      service-id: auth-server
 
 # ?????????
 logging:
   level:
     org.springframework.cloud.netflix.zuul: DEBUG
+# *** JWT Secret Configuration (Must match auth-server) ***
+jwt:
+  secret: VGhpc0lzQVZlcnlTZWNyZXRLZXlGb3JKb2JQbGF0Zm9ybUF1dGhTZXJ2aWNl
+  # Expiration is not strictly needed in gateway for validation, but good to have consistent property structure
+  expiration: 3600000
