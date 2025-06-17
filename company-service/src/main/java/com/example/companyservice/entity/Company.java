@@ -1,4 +1,4 @@
-package com.example.jobseekerservice.entity;
+package com.example.companyservice.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

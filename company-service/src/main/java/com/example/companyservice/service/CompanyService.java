@@ -1,15 +1,13 @@
-package com.example.jobseekerservice.service;
+package com.example.companyservice.service;
 
-import com.example.jobseekerservice.entity.Company;
-import com.example.jobseekerservice.repository.CompanyRepository;
+import com.example.companyservice.entity.Company;
+import com.example.companyservice.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication; // Import Authentication
-import org.springframework.security.core.GrantedAuthority; // Import GrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder; // Import SecurityContextHolder
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional; // Import Transactional
 
-import java.util.Collection; // Import Collection
 import java.util.List;
 import java.util.Optional;
 
