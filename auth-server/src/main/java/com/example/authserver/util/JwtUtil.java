@@ -25,9 +25,7 @@ public class JwtUtil {
     private long expiration; // in milliseconds
 
     private Key getSigningKey() {
-        System.out.println("AuthServer JWT Secret (Base64 encoded): " + secret);
         byte[] keyBytes = Decoders.BASE64.decode(secret);
-        System.out.println("AuthServer Signing Key Bytes (Base64 encoded): " + Base64.getEncoder().encodeToString(keyBytes)); // Print the actual key bytes
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
