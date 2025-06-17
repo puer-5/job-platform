@@ -11,9 +11,9 @@
 
     <modules>
         <module>eureka-server</module>
-        <module>zuul-gateway</module>
-        <module>jobseeker</module>
         <module>jobseeker-service</module>
+        <module>zuul-gateway</module>
+        <module>auth-server</module>
     </modules>
 
     <parent>

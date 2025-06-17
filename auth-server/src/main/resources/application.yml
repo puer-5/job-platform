@@ -1,0 +1,32 @@
+server:
+    port: 8081
+
+spring:
+    application:
+        name: auth-server
+
+    # *** MySQL Database Configuration ***
+    datasource:
+        url: jdbc:mysql://localhost:3306/job_platform?useSSL=false&serverTimezone=UTC # Replace with your database name and connection details
+        username: root # Replace with your MySQL username
+        password: 4455 # Replace with your MySQL password
+        driver-class-name: com.mysql.cj.jdbc.Driver
+
+    jpa:
+        hibernate:
+            ddl-auto: update # Options: none, update, create, create-drop. 'update' is good for development, 'none' or 'validate' for production.
+        show-sql: true # Set to true to see generated SQL queries (useful for debugging)
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL8Dialect # Or appropriate dialect for your MySQL version
+
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: http://localhost:8761/eureka/
+    instance:
+        hostname: localhost
+
+jwt:
+    secret: VGhpc0lzQVZlcnlTZWNyZXRLZXlGb3JKb2JQbGF0Zm9ybUF1dGhTZXJ2aWNl
+    expiration: 3600000
