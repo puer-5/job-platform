@@ -7,9 +7,9 @@ spring:
 
     # *** MySQL Database Configuration ***
     datasource:
-        url: jdbc:mysql://localhost:3306/job_platform?useSSL=false&serverTimezone=UTC # Replace with your database name and connection details
+        url: jdbc:mysql://localhost:3306/recruit_system?useSSL=false&serverTimezone=UTC # Replace with your database name and connection details
         username: root # Replace with your MySQL username
-        password: 4455 # Replace with your MySQL password
+        password: "@Aa720404" # Replace with your MySQL password
         driver-class-name: com.mysql.cj.jdbc.Driver
 
     jpa:
