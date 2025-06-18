@@ -1,4 +1,4 @@
-package com.example.companyservice.config;
+package com.example.adminservice.config;
 
 
 import com.example.companyservice.security.UserHeaderAuthenticationFilter;
