@@ -59,33 +59,7 @@ export default {
       },
       loading: false,
       errorMessage: '',
-      testUsers: [
-        {
-          username: 'jobseeker1',
-          password: '123456',
-          userType: 'USER'
-        },
-        {
-          username: 'jobseeker2',
-          password: '123456',
-          userType: 'USER'
-        },
-        {
-          username: 'employer1',
-          password: '123456',
-          userType: 'ENTERPRISE'
-        },
-        {
-          username: 'employer2',
-          password: '123456',
-          userType: 'ENTERPRISE'
-        },
-        {
-          username: 'admin',
-          password: '123456',
-          userType: 'ADMIN'
-        }
-      ]
+      testUsers: []
     }
   },
   methods: {
@@ -106,7 +80,7 @@ export default {
         
         console.log('Sending login request with data:', loginData);
         
-        const response = await axios.post('http://localhost:9000/auth/auth/login', loginData).then(
+        const response = await axios.post('/auth/auth/login', loginData).then(
             response => {
               console.log(response.data)
               return response

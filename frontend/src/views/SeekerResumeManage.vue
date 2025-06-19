@@ -59,8 +59,6 @@
 </template>
 
 <script>
-import api from '@/util/api';
-import axios from 'axios';
 
 export default {
   name: 'ResumeManager',
@@ -86,7 +84,7 @@ export default {
     },
     async fetchResumes() {
       try {
-        const res = await api.get(`/resumes/jobseeker/${this.getJobSeekerId()}`);
+        const res = await api.get(`/jobseeker/resumes/${this.getJobSeekerId()}`);
         this.resumes = res.data;
       } catch (err) {
         this.$message.error('获取简历失败');
@@ -147,7 +145,8 @@ export default {
     },
     async deleteResume(id) {
       try {
-        await api.delete(`/resumes/${id}`);
+        const token = localStorage.getItem('token');
+        await api.delete(`/resumes/${id}`,{headers: { Authorization: `Bearer ${token}`}});
         this.$message.success('删除成功');
         this.fetchResumes();
       } catch (err) {
@@ -156,7 +155,8 @@ export default {
     },
     async setDefault(id) {
       try {
-        await api.post(`/resumes/${id}/set-default`);
+        const token = localStorage.getItem('token');
+        await api.post(`/resumes/${id}/set-default`,{headers:{Authorization: `Bearer ${token}`}});
         this.$message.success('设置成功');
         this.fetchResumes();
       } catch (err) {
