@@ -20,6 +20,12 @@ zuul:
     authserver:
       path: /auth/**
       service-id: auth-server
+    company:
+      path: /company/**
+      service-id: company-service
+    admin:
+      path: /admin/**
+      service-id: admin-service
 
 # ?????????
 logging:
